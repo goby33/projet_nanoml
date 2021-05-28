@@ -8,6 +8,7 @@ char* mes_balises[] = {
 char mon_caractere;
 FILE* fichier = NULL;
 t_table_string lectureString = NULL;
+t_table_arbre arbre_html = NULL;
 
 // -- METODES STRUCTURE STRING
 t_entree_string* nouvelle_entree_string(char etiquette) {
@@ -31,7 +32,6 @@ void afficher_abre_string(a_entree_string ceci) {
         printf("%c" ,ceci->l_etiquette);
         afficher_abre_string(ceci->le_frere_suivant);
     }
-    printf("\n");
 }
 char * returnStructEnChar(a_entree_string ceci, int longueur) {
     char* conteneurLettres = malloc(sizeof(char)*longueur);
@@ -174,17 +174,30 @@ int estUneBaliseFermante() {
 void start(char le_fichier[]) {
     fichier = fopen(le_fichier, "r");
     if (fichier != NULL) {
+        arbre_html = nouvelle_entree_arbre("body", NULL, NULL);
         do {
             mon_caractere = (char) fgetc(fichier);
             if (mon_caractere == '<') {
                 if (estUneBaliseOuverte()) {
-                    printf("balise_ouverte\n");
+                    creer_benjamin_arbre(arbre_html, "aa");
+                    arbre_html = arbre_html->le_dernier_fils;
+                    printf("|");
+                    afficher_abre_string(lectureString);
+                    printf("|");
                 } else {
                     afficher_abre_string(lectureString);
                 }
                 lectureString = NULL;
                 if (estUneBaliseFermante()) {
-                    printf("balise_fermante");
+                    if (arbre_html == NULL) {
+                        printf("ne pas commencer par une balise fermante");
+                        exit(-1);
+                    } else {
+                        arbre_html = arbre_html->le_pere;
+                    }
+                    printf("|");
+                    afficher_abre_string(lectureString);
+                    printf("|");
                 } else {
                     afficher_abre_string(lectureString);
                 }
@@ -193,5 +206,7 @@ void start(char le_fichier[]) {
             printf("%c", mon_caractere);
         } while (mon_caractere != EOF);
         fclose(fichier);
+        printf("------\n");
+        afficher_table_arbre(arbre_html, 0);
     }
 }
