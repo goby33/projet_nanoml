@@ -22,7 +22,8 @@ typedef a_entree_string t_table_string;
 
 // -- STRUCTURE ARBRE HTML
 typedef struct s_entree_arbre{
-    char* l_etiquette;
+    t_table_string l_etiquette;
+    t_balise balise;
     struct s_entree_arbre* le_premier_fils;
     struct s_entree_arbre* le_dernier_fils;
     struct s_entree_arbre* le_frere_precedent;
