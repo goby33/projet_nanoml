@@ -1,0 +1,10 @@
+<document>
+ <section>
+ Bonjour le Monde.
+ </section>
+</document>
+<annexes>
+    Auteur : Weinberg Benjamin
+    Relecteur : Jacques Julie
+    Relecteur : Gouvy Nicolas
+</annexes>

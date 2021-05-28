@@ -1,0 +1,13 @@
+<texte_enrichi> ::= <document> <annexes>
+<document> ::= ‘debut_doc’ <contenu> ‘fin_doc’
+<annexes> ::= {‘debut_annexe’ <contenu> ‘fin_annexe’ }
+<contenu> ::= { <section> | <titre> | <mot_enrichi> | <liste> }
+<section> ::= ‘debut_section’ <contenu> ‘fin_section’
+<titre> ::= ‘debut_titre’ <texte> ‘fin_titre’
+<liste> ::= ‘debut_liste’ { <item> } ‘fin_liste’
+<item> ::= ‘debut_item’ ( <liste_texte> | <texte_liste> ) ‘fin_item’
+<liste_texte> ::= <liste> <texte_liste> | epsilon
+<texte_liste> ::= <texte> <liste_texte> | epsilon
+<texte> ::= { <mot_enrichi> }
+<mot_enrichi> ::= <mot_simple> | <mot_important> | ‘retour_a_la_ligne’
+<mot_important> ::= ‘debut_important’ { <mot_simple> } ’fin_important’
